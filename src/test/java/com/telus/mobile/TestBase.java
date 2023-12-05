@@ -22,9 +22,6 @@ public class TestBase {
     /**
      * Set up method to initialize the test environment.
      * 
-     * @param platformName      The name of the platform (iOS or Android).
-     * @param deviceName        The name of the device.
-     * @param appiumServerUrl   The URL of the Appium server.
      * @throws MalformedURLException if the URL is malformed.
      */
     @BeforeClass(alwaysRun = true)
