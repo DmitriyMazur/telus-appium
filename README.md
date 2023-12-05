@@ -28,17 +28,34 @@ appium
 ```
 4. **Configure Appium URL:**
    Once Appium is running, note the server URL provided in the console, e.g., `http://127.0.0.1:4723/`. Update the value of `appiumServerUrl` in your test script accordingly.
-5. **Run the Test:**
-   Execute the following command to run the test:
-```bash
-mvn test -DplatformName=iOS -DdeviceName=iPhone\\ 15\\ Pro -DappiumServerUrl=http://127.0.0.1:4723
+   ### Configuring Test Parameters
+
+Test parameters such as platform name, device name, Appium server URL, and specific URLs are stored in configuration files. Two configuration files are provided for different environments:
+
+- `config.properties`: Default configuration for local testing.
+- `config-staging.properties`: Configuration for the staging environment.
+
+You can add more configuration files as needed for different environments.
+
+Example content of `config.properties`:
+
+```properties
+# config.properties
+
+platformName=iOS
+deviceName=iPhone 15 Pro
+appiumServerUrl=http://127.0.0.1:4723
+telus.Url=https://telustvplus.com/#/
+telus.expectedTitle=TELUS TV+
 ```
-   **Note:** Adjust parameters based on your platform and device.
-## Customization
-- **Navigate to Different URL:**
-  Update the `driver.get("https://telustvplus.com/#/");` line in the test script with the desired URL.
-- **Additional Assertions/Interactions:**
-  Extend the test script with additional assertions or interactions as needed.
+
+5. **Run the Test:**
+   Running Tests
+To run the tests, you can use Maven profiles to specify the desired configuration file. For example, to run the tests with the staging configuration, use the following command:
+```bash
+mvn test -P staging
+```
+
 ## Troubleshooting
 If you encounter any issues during setup or execution, follow these steps:
 - **Check Appium Server Logs:**
