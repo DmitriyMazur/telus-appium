@@ -1,53 +1,39 @@
 package com.telus.mobile;
 
-import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.MobileElement;
-import io.appium.java_client.ios.IOSDriver;
-import org.openqa.selenium.By;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 
-public class TelusTvTest {
+public class TelusTvTest extends TestBase {
 
-    private AppiumDriver<MobileElement> driver;
+    /**
+     * Test case to navigate to the TELUS URL and assert the title.
+     */
+    @Test
+    public void navigateToTelusUrlAndAssertTitle() {
+        // Open Safari and navigate to TELUS URL
+        telusTvPage.navigateToUrl(telusUrl);
 
-    @BeforeClass
-    @Parameters({"platformName", "deviceName", "appiumServerUrl"})
-    public void setUp(String platformName, String deviceName, String appiumServerUrl) throws MalformedURLException {
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("platformName", platformName);
-        capabilities.setCapability("deviceName", deviceName);
-        capabilities.setCapability("automationName", "XCUITest");
-        capabilities.setCapability("platformVersion", "17.0");
+        // Assert that the title is not empty
+        Assert.assertTrue(telusTvPage.isTitleNotEmpty(), "Title is empty");
 
-        if (platformName.equalsIgnoreCase("iOS")) {
-            driver = new IOSDriver<>(new URL(appiumServerUrl), capabilities);
-        } else if (platformName.equalsIgnoreCase("Android")) {
-            // Initialize Android driver if needed
-        }
+        // Assert that the title matches the expected value
+        telusTvPage.assertTitleEquals(Config.getProperty("telus.expectedTitle"), "Title mismatch");
     }
 
+    /**
+     * Test case to navigate to the TELUS URL and assert the correctness of the URL.
+     */
     @Test
     public void navigateToTelusUrlAndAssert() {
         // Open Safari and navigate to TELUS URL
-        driver.get("https://telustvplus.com/#/");
+        telusTvPage.navigateToUrl(telusUrl);
 
         // Assert that the correct URL is displayed
-        String currentUrl = driver.getCurrentUrl();
-        String expectedUrl = "https://telustvplus.com/#/";
-        Assert.assertEquals(currentUrl, expectedUrl, "URL mismatch");
+        String currentUrl = telusTvPage.getCurrentUrl();
+        Assert.assertEquals(currentUrl, telusUrl, "URL mismatch");
 
         // Optionally, add further assertions or interactions as needed
     }
-
-    @AfterClass
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
-    }
 }
+

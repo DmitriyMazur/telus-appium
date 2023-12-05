@@ -12,6 +12,21 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
+    <profiles>
+    <profile>
+        <id>local</id>
+        <properties>
+            <config.path>src/main/resources/config.properties</config.path>
+        </properties>
+    </profile>
+    <profile>
+        <id>staging</id>
+        <properties>
+            <config.path>src/main/resources/config-staging.properties</config.path>
+        </properties>
+    </profile>
+    <!-- Add more profiles as needed for different environments -->
+    </profiles>
 
     <dependencies>
         <!-- Appium dependencies -->
